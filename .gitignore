@@ -346,3 +346,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+composer.lock
+package-lock.json
+database/seeders/UserSeederTim.php

@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AppController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +16,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//|--------------------------------------------------------------------------
+//| SESSIONS
+//|--------------------------------------------------------------------------
+Route::get('/login', [SessionController::class, 'login'])->name('login');
+Route::get('/register', [SessionController::class, 'register'])->name('register');
+Route::get('/logout', [SessionController::class, 'destroy'])->name('logout');
+
+//|--------------------------------------------------------------------------
+//| ADMIN PANEL
+//|--------------------------------------------------------------------------
+
+Route::get('/admin', [DashboardController::class, 'index'])->name('admin.index')->middleware('role:admin');
+
+//|--------------------------------------------------------------------------
+//| APPLICATION
+//|--------------------------------------------------------------------------
+
+Route::get('/', [AppController::class, 'index'])->name('app.index')->middleware('auth');
