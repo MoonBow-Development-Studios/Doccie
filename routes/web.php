@@ -19,8 +19,11 @@ use Illuminate\Support\Facades\Route;
 //|--------------------------------------------------------------------------
 //| SESSIONS
 //|--------------------------------------------------------------------------
-Route::get('/login', [SessionController::class, 'login'])->name('login');
-Route::get('/register', [SessionController::class, 'register'])->name('register');
+Route::post('/login', [SessionController::class, 'create']);
+Route::post('/register', [SessionController::class, 'store']);
+
+Route::get('/login', [SessionController::class, 'login'])->name('login')->middleware('guest');
+Route::get('/register', [SessionController::class, 'register'])->name('register')->middleware('guest');
 Route::get('/logout', [SessionController::class, 'destroy'])->name('logout');
 
 //|--------------------------------------------------------------------------

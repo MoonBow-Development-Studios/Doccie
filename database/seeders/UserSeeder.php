@@ -15,7 +15,6 @@ class UserSeeder extends Seeder
     {
         User::create([
             'first_name' => 'your',
-            // 'infix' => 'von/van/der',
             'last_name' => 'name',
             'email' => 'doccie@moonbowstudios.net',
             'email_verified_at' => now(),
