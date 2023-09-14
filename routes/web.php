@@ -36,4 +36,5 @@ Route::get('/admin', [DashboardController::class, 'index'])->name('admin.index')
 //| APPLICATION
 //|--------------------------------------------------------------------------
 
-Route::get('/', [AppController::class, 'index'])->name('app.index')->middleware('auth');
+Route::get('/app', [AppController::class, 'index'])->name('app.index')->middleware('auth');
+Route::get('/', [AppController::class, 'redirect'])->name('app.redirect');

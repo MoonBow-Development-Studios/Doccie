@@ -29,9 +29,7 @@ class SessionController extends Controller
         $password = $attributes['password'];
 
         if (auth()->attempt(['email' => $email, 'password' => $password])) {
-
-            //TODO: Render client app
-
+            return redirect()->route('app.index');
         } else {
             return Inertia::render('login', ['error' => 'The email or password you entered is incorrect. Please check your credentials and try again.']);
         }
@@ -90,8 +88,6 @@ class SessionController extends Controller
 
         // log user in
         auth()->login($user);
-
-        // TODO: Redirect to client app
-        dd('User created and logged in');
+        return redirect()->route('app.index');
     }
 }
