@@ -1,15 +1,22 @@
 <template>
-    <div id="background" class="w-screen h-screen flex flex-col bg-[#4158D0] bg-gradient-to-tr from-[#4158D0] via-[#C850C0] to-[#FFCC70]">
+    <!--Setting the background color based on the settings object-->
+    <div id="background"
+         :style="`background-color: ${s.bg.from};
+         background: linear-gradient(${s.bg.degrees}deg,
+         ${emptyStringOrNull(s.bg.via) ? `${s.bg.from} 0%, ${s.bg.to} 100%` :
+         `${s.bg.from} 0%, ${s.bg.via} 50%, ${s.bg.to} 100%`});`"
+         class="w-screen h-screen flex flex-col">
+
         <div id="content" class="py-2 px-2 flex justify-center items-center h-full">
-            <div class="rounded-md w-full h-full shadow-md bg-white">
-                <slot></slot>
+            <div class="rounded-md w-full h-full shadow-md bg-white z-40">
+                <slot ></slot>
             </div>
         </div>
     </div>
 </template>
 <script>
 import '../js/grained.min.js'
-
+import {useSettingsStore} from "../stores/settings.js";
 export default {
     name: 'app_layout',
     data() {
@@ -22,7 +29,7 @@ export default {
                 grainDensity: 1,
                 grainWidth: 1,
                 grainHeight: 1
-            }
+            },
         }
     },
     methods: {
@@ -42,19 +49,22 @@ export default {
                     subtree: true
                 });
             });
+        },
+        emptyStringOrNull(str) {
+            return str === '' || str === null;
         }
     },
     created() {
         this.waitForElm('#background').then(() => {
             grained('#background', this.grained_options);
         });
+    },
+    setup() {
+        const s = useSettingsStore();
+        return {
+            s // settings object
+        }
     }
 }
 
 </script>
-
-<style scoped>
-background-color: #4158D0;
-background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-
-</style>

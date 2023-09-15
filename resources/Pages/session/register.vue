@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import registerForm from "../../components/registerForm.vue";
+import registerForm from "../../components/forms/registerForm.vue";
 import session_layout from "../../layouts/session.vue";
 
 export default {
