@@ -1,6 +1,9 @@
 <template>
     <div v-show="!previewMode" class="py-2 px-2 w-full rounded-md h-full dark:bg-slate-700">
-        <textarea id="editor" class="dark:bg-slate-700 dark:text-white rounded-md w-full h-full overflow-hidden resize-none text-sm focus:outline-0"></textarea>
+        <textarea
+            id="editor"
+            placeholder="Doccie is ready to take your notes!"
+            class="dark:bg-slate-700 border-0 group-focus:outline-0 dark:text-white rounded-md w-full h-full overflow-hidden resize-none text-sm focus:outline-0"></textarea>
     </div>
     <div v-show="previewMode" class="py-2 px-2 w-full h-full rounded-md dark:bg-slate-700">
         <div v-html="html" class="dark:bg-slate-700 dark:text-white rounded-md w-full h-full overflow-hidden prose lg:prose-xl dark:prose-invert"></div>

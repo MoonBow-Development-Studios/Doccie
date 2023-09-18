@@ -2,11 +2,10 @@
     <div class="absolute bottom-1 mb-4 flex flex-row-reverse justify-center w-full">
         <div class="pr-4 h-12 min-w-[3rem] bg-gray-200 dark:bg-slate-700 drop-shadow-2xl w-ful px-3 py-3 flex flex-row items-center justify-between gap-6 rounded-full border-2 border-gray-400">
 
-            <!--tools?-->
-            <div class="flex flex-row justify-center items-center bg-transparent rounded-full hover:bg-gray-300 dark:hover:bg-slate-800 px-2 py-2">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="w-5 h-5 fill-gray-600 dark:fill-white">
-                    <path fill-rule="evenodd" d="M14.5 10a4.5 4.5 0 004.284-5.882c-.105-.324-.51-.391-.752-.15L15.34 6.66a.454.454 0 01-.493.11 3.01 3.01 0 01-1.618-1.616.455.455 0 01.11-.494l2.694-2.692c.24-.241.174-.647-.15-.752a4.5 4.5 0 00-5.873 4.575c.055.873-.128 1.808-.8 2.368l-7.23 6.024a2.724 2.724 0 103.837 3.837l6.024-7.23c.56-.672 1.495-.855 2.368-.8.096.007.193.01.291.01zM5 16a1 1 0 11-2 0 1 1 0 012 0z" clip-rule="evenodd" />
-                    <path d="M14.5 11.5c.173 0 .345-.007.514-.022l3.754 3.754a2.5 2.5 0 01-3.536 3.536l-4.41-4.41 2.172-2.607c.052-.063.147-.138.342-.196.202-.06.469-.087.777-.067.128.008.257.012.387.012zM6 4.586l2.33 2.33a.452.452 0 01-.08.09L6.8 8.214 4.586 6H3.309a.5.5 0 01-.447-.276l-1.7-3.402a.5.5 0 01.093-.577l.49-.49a.5.5 0 01.577-.094l3.402 1.7A.5.5 0 016 3.31v1.277z" />
+            <!--share-->
+            <div id="share" v-on:click="toggleTooltip" class="flex flex-row justify-center items-center bg-transparent rounded-full hover:bg-gray-300 dark:hover:bg-slate-800 px-2 py-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
             </div>
 
@@ -15,7 +14,6 @@
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-600 dark:text-white">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
                 </svg>
-
             </div>
 
             <!--eye-->
@@ -26,23 +24,94 @@
                 </svg>
             </div>
         </div>
+        <div id="tooltipContent" role="tooltip" class="top-14 left-8 invisible absolute w-7/12 z-10 inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+            <div class="flex flex-col  ">
+                <div class="w-full mb-2">
+                    <p class="text-lg font-bold text-left">Share note</p>
+                    <p class="text-sm text-gray-300">You can easily share notes using Doccie! The recipient doesn't need an account.</p>
+                </div>
+                <p class="mb-2 font-bold ">Who can see this note? 👀</p>
+                <div class="flex items-center mb-4">
+                    <input v-model="shareType" checked id="private_note" type="radio" value="private" name="private_note" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    <label for="private_note" class="ml-2 text-sm font-medium text-white dark:text-gray-300">🙈 - Only for my eyes</label>
+                </div>
+                <div class="flex items-center">
+                    <input v-model="shareType" id="public_note" type="radio" value="public" name="public_note" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    <label for="public_note" class="ml-2 text-sm font-medium text-white dark:text-gray-300">🙉️ - I want to share it!</label>
+                </div>
+                <button
+                    type="button"
+                    :disabled="(shareType === 'private')"
+                    class="text-blue-700 disabled:text-gray-700 w-full mt-2 hover:text-white border border-blue-700 disabled:border-gray-700 hover:bg-blue-800 hover:disabled:bg-transparent focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Copy link</button>
+            </div>
+            <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
     </div>
 </template>
 
 <script>
 import { useSettingsStore } from "../../stores/settings.js";
+import { Tooltip} from "flowbite";
 
 export default {
     name: 'tools_mobile',
+    data() {
+      return {
+          tooltip: null,
+          isShowingTooltip: false,
+          shareType: 'private'
+      }
+    },
     setup() {
         const s = useSettingsStore();
         return {
             s // settings object
         }
     },
+    created() {
+        let TTTarget;
+        let TTTrigger;
+
+        this.waitForElm('#share').then(() => {
+            TTTarget = document.getElementById('tooltipContent');
+            TTTrigger = document.getElementById('share');
+
+            const options = {
+                placement: 'top',
+                triggerType: 'click',
+            };
+            this.tooltip = new Tooltip(TTTarget, TTTrigger, options);
+        });
+    },
     methods: {
         emptyStringOrNull(str) {
             return str === '' || str === null;
+        },
+        waitForElm(selector) {
+            return new Promise(resolve => {
+                if (document.querySelector(selector)) {
+                    return resolve(document.querySelector(selector));
+                }
+                const observer = new MutationObserver(mutations => {
+                    if (document.querySelector(selector)) {
+                        observer.disconnect();
+                        resolve(document.querySelector(selector));
+                    }
+                });
+                observer.observe(document.body, {
+                    childList: true,
+                    subtree: true
+                });
+            });
+        },
+        toggleTooltip() {
+            if (this.isShowingTooltip) {
+                this.tooltip.hide();
+                this.isShowingTooltip = false;
+            } else {
+                this.tooltip.show();
+                this.isShowingTooltip = true;
+            }
         }
     }
 }

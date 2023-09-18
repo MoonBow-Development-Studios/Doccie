@@ -34,10 +34,12 @@ export default {
     },
     methods: {
         checkTheme() {
-            if (this.s.darkMode === 2 || (this.s.darkMode === 0 && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            if (this.s.appearance === "dark" || (this.s.appearance === "system" && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                 document.documentElement.classList.add('dark')
+                console.log('dark')
             } else {
                 document.documentElement.classList.remove('dark')
+                console.log('light')
             }
         }
     }

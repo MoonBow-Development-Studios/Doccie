@@ -2,7 +2,7 @@ import {defineStore} from "pinia";
 
 export const useSettingsStore = defineStore('settings', {
     state: () => ({
-        darkMode: 1, // 0 = system, 1 = light, 2 = dark
+        appearance: "light",
         bg: {
             from: "#4158D0",
             via: "#C850C0",
