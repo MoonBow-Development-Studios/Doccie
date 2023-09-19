@@ -16,7 +16,7 @@ export const useDocumentsStore = defineStore('documents', {
         }
     },
     getters: {
-        getDocument: (state) => (documentId) => {
+        getDocument: (state) => (state, documentId) => {
             return state.documents.get(documentId);
         }
     }

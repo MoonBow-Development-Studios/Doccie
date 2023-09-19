@@ -33,5 +33,8 @@ export const useSettingsStore = defineStore('settings', {
     },
     getters: {
         getSettings: (state) => state,
+        getSettingProperty: () => (state, property) => {
+            return state[property.toLowerCase()];
+        }
     },
 });

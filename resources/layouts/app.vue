@@ -1,4 +1,5 @@
 <template>
+    <menu_mobile/>
     <!--Setting the background color based on the settings object-->
     <div id="background"
          :style="`background-color: ${s.bg.from};
@@ -17,8 +18,10 @@
 <script>
 import '../js/grained.min.js'
 import {useSettingsStore} from "../stores/settings.js";
+import Menu_mobile from "../components/screens/menu_mobile.vue";
 export default {
     name: 'app_layout',
+    components: {Menu_mobile},
     data() {
         return {
             grained_options: {
