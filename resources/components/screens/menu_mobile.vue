@@ -1,19 +1,27 @@
 <template>
-    <div :style="`background-color: ${darkenColor(s.bg.from)};
-         background: linear-gradient(180deg,
-         ${emptyStringOrNull(s.bg.via) ? darkenColor(s.bg.from) + ' 0%, ' + darkenColor(s.bg.to) + ' 100%' :
-         darkenColor(s.bg.from) + ' 0%, ' + darkenColor(s.bg.via) + ' 50%, ' + darkenColor(s.bg.to) + ' 100%'});`"
-         class="absolute h-screen w-screen z-50">
-
-
-
-    </div>
+        <div :style="`background-color: ${s.bg.from}; background: linear-gradient(180deg,
+        ${emptyStringOrNull(s.bg.via) ?
+        darkenColor(s.bg.from) + ' 0%, ' + darkenColor(s.bg.to) + ' 100%' :
+        darkenColor(s.bg.from) + ' 0%, ' + darkenColor(s.bg.via) + ' 50%, ' +
+        darkenColor(s.bg.to) + ' 100%'});`"
+             class="absolute h-screen w-screen flex flex-col items-center justify-between z-50">
+            <ms_topbar/>
+            <list
+                @createCollection="createCollection($event)"
+            />
+            <div id="spacer"></div>
+            <searchbar class="absolute bottom-0 fixed"/>
+        </div>
 </template>
 
 <script>
 import {useSettingsStore} from "../../stores/settings.js";
+import Ms_topbar from "../ui/mobile_screen/topbar.vue";
+import Searchbar from "../ui/mobile_screen/searchbar.vue";
+import List from "../ui/mobile_screen/list.vue";
 export default {
     name: "menu_mobile",
+    components: {List, Searchbar, Ms_topbar},
     data() {
 
     },
@@ -56,6 +64,10 @@ export default {
         },
         emptyStringOrNull(str) {
             return str === '' || str === null;
+        },
+        createCollection(e) {
+            if (e.key !== 'Enter') return;
+            console.log(e.target.value);
         }
     }
 }
