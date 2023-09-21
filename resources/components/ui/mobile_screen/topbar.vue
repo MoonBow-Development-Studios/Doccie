@@ -17,6 +17,8 @@
 </template>
 <script>
 
+import {Tooltip} from "flowbite";
+
 export default {
     name: 'ms_topbar',
 }

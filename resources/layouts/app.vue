@@ -1,5 +1,5 @@
 <template>
-    <menu_mobile/>
+<!--    <menu_mobile/>-->
     <!--Setting the background color based on the settings object-->
     <div id="background"
          :style="`background-color: ${s.bg.from};

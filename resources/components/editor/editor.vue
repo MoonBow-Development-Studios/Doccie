@@ -3,7 +3,7 @@
         <textarea
             id="editor"
             placeholder="Doccie is ready to take your notes!"
-            class="dark:bg-slate-700 border-0 group-focus:outline-0 dark:text-white rounded-md w-full h-full overflow-hidden resize-none text-sm focus:outline-0"></textarea>
+            class="dark:bg-slate-700 overflow-scroll placeholder:font-semibold border-0 group-focus:outline-0 dark:text-white rounded-md w-full h-full overflow-hidden resize-none text-sm focus:ring-0 focus:outline-0"></textarea>
     </div>
     <div v-show="previewMode" class="py-2 px-2 w-full h-full rounded-md dark:bg-slate-700">
         <div v-html="html" class="dark:bg-slate-700 dark:text-white rounded-md w-full h-full overflow-hidden prose lg:prose-xl dark:prose-invert"></div>

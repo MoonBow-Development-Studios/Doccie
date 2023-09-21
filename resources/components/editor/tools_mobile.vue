@@ -3,7 +3,7 @@
         <div class="pr-4 h-12 min-w-[3rem] bg-gray-200 dark:bg-slate-700 drop-shadow-2xl w-ful px-3 py-3 flex flex-row items-center justify-between gap-6 rounded-full border-2 border-gray-400">
 
             <!--share-->
-            <div id="share" v-on:click="toggleTooltip" class="flex flex-row justify-center items-center bg-transparent rounded-full hover:bg-gray-300 dark:hover:bg-slate-800 px-2 py-2">
+            <div id="share" v-on:click="$refs.tooltip.toggleTooltip();" class="flex flex-row justify-center items-center bg-transparent rounded-full hover:bg-gray-300 dark:hover:bg-slate-800 px-2 py-2">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -24,8 +24,8 @@
                 </svg>
             </div>
         </div>
-        <div id="tooltipContent" role="tooltip" class="top-14 left-8 invisible absolute w-7/12 z-10 inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-            <div class="flex flex-col  ">
+        <tooltip class="w-7/12" ref="tooltip">
+            <div class="flex flex-col">
                 <div class="w-full mb-2">
                     <p class="text-lg font-bold text-left">Share note</p>
                     <p class="text-sm text-gray-300">You can easily share notes using Doccie! The recipient doesn't need an account.</p>
@@ -44,21 +44,19 @@
                     :disabled="(shareType === 'private')"
                     class="text-blue-700 disabled:text-gray-700 w-full mt-2 hover:text-white border border-blue-700 disabled:border-gray-700 hover:bg-blue-800 hover:disabled:bg-transparent focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Copy link</button>
             </div>
-            <div class="tooltip-arrow" data-popper-arrow></div>
-        </div>
+        </tooltip>
     </div>
 </template>
 
 <script>
 import { useSettingsStore } from "../../stores/settings.js";
-import { Tooltip} from "flowbite";
+import Tooltip from "../ui/util/tooltip.vue";
 
 export default {
     name: 'tools_mobile',
+    components: {Tooltip},
     data() {
       return {
-          tooltip: null,
-          isShowingTooltip: false,
           shareType: 'private'
       }
     },
@@ -68,51 +66,10 @@ export default {
             s // settings object
         }
     },
-    created() {
-        let TTTarget;
-        let TTTrigger;
-
-        this.waitForElm('#share').then(() => {
-            TTTarget = document.getElementById('tooltipContent');
-            TTTrigger = document.getElementById('share');
-
-            const options = {
-                placement: 'top',
-                triggerType: 'click',
-            };
-            this.tooltip = new Tooltip(TTTarget, TTTrigger, options);
-        });
-    },
     methods: {
         emptyStringOrNull(str) {
             return str === '' || str === null;
         },
-        waitForElm(selector) {
-            return new Promise(resolve => {
-                if (document.querySelector(selector)) {
-                    return resolve(document.querySelector(selector));
-                }
-                const observer = new MutationObserver(mutations => {
-                    if (document.querySelector(selector)) {
-                        observer.disconnect();
-                        resolve(document.querySelector(selector));
-                    }
-                });
-                observer.observe(document.body, {
-                    childList: true,
-                    subtree: true
-                });
-            });
-        },
-        toggleTooltip() {
-            if (this.isShowingTooltip) {
-                this.tooltip.hide();
-                this.isShowingTooltip = false;
-            } else {
-                this.tooltip.show();
-                this.isShowingTooltip = true;
-            }
-        }
     }
 }
 </script>

@@ -66,7 +66,18 @@ export default {
             return str === '' || str === null;
         },
         createCollection(e) {
-            if (e.key !== 'Enter') return;
+            console.log(e.target.value.length);
+            if (e.key !== 'Enter') {
+                const maxLen = 25;
+                if (e.target.value.length > maxLen) {
+                    // cancel the event
+                    // check if key is backspace or delete
+                    if (e.keyCode !== 8 && e.keyCode !== 46) {
+                        e.preventDefault();
+                    }
+                }
+                return;
+            }
             console.log(e.target.value);
         }
     }
